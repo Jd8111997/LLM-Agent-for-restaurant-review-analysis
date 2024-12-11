@@ -4,9 +4,9 @@
 Large Language Models (LLMs) are extremely flexible tools and are effective in tasks that require understanding human language. Their pretraining procedure, which involves next token prediction on vast amounts of text data, enables them to develop an understanding of syntax, grammar, and linguistic meaning. One strong use case is the ability to analyze large amounts of unstructured text data, allowing us to derive insights more efficiently. 
 
 ### Objective
-This project will focus on leveraging LLM capabilities in the context of restaurant reviews. We provide the file `restaurant-data.txt` which contains all of the restaurant reviews required for this task. These reviews are qualitative. Within the rest of the project, we will be using the AutoGen framework to fetch restaurant reviews, summarize these reviews to extract scores for each review, and finally aggregate these scores. Your end solution will be able to answer queries about a restaurant and give back a score. 
+This project will focus on leveraging LLM capabilities in the context of restaurant reviews. The file `restaurant-data.txt` which contains all of the restaurant reviews required for this task. These reviews are qualitative. Within the rest of the project, we will be using the AutoGen framework to fetch restaurant reviews, summarize these reviews to extract scores for each review, and finally aggregate these scores. Our end solution will be able to answer queries about a restaurant and give back a score. 
 
-Here are some example queries: "How good is Subway as a restaurant" or "What would you rate In N Out?". Note that the restaurant names provided in the queries may not exactly match the exact syntax in `restaurant-data.txt` (like the query having the restaurant name in lower case). We will only run queries on valid restaurants, so no queries that contain invalid restaurants/structures will be tested. 
+Here are some example queries: "How good is Subway as a restaurant" or "What would you rate In N Out?". Note that the restaurant names provided in the queries may not exactly match the exact syntax in `restaurant-data.txt` (like the query having the restaurant name in lower case).
 
 The format is that each review is on a new line, and each line begins with the restaurant name. You'll notice that each review is qualitative, with no mention of ratings, numbers, or quantitative data. However, each review has a series of adjectives which nicely correspond to the ratings 1, 2, 3, 4, and 5, allowing you to easily associate a score for food quality and service quality for each restaurant.
 
@@ -15,7 +15,7 @@ As mentioned earlier, for this project, we will be using the AutoGen framework t
 
 AutoGen is a framework that enables the creation of multi-agent workflows involving multiple LLMs. Essentially, you can think of it as a way to define "control flows" or "conversation flows" between multiple LLMs. This way, you can chain together several individual LLM agents, having them all work together by conversing with each other to accomplish a larger task. Through AutoGen, users can define networks of LLM agents, enabling complex reasoning, self-evaluating, data processing pipelines, and much more. 
 
-For the entirety of the work, we **are using GPT-4o-mini model** due to its cost efficiency. It will be more than 10X cheaper than using GPT-4o while providing "similar" levels of intelligence, so you can expect to incur a much lower cost.
+For the entirety of the work, we **are using GPT-4o-mini model** due to its cost efficiency. It will be more than 10X cheaper than using GPT-4o while providing "similar" levels of intelligence for this project, so you can expect to incur a much lower cost.
 
 ### Additional Features of AutoGen
 Here are some notable features and keywords of AutoGen:
@@ -25,20 +25,20 @@ Here are some notable features and keywords of AutoGen:
 - Summary Args
 
 ## Setup: Environment Variables, Virtual Environment, and Dependencies
-We recommend using a virtual environment for this project, then installing all of the packages listed in `requirements.txt`. 
+We recommend using a virtual environment for this project, then installing all of the packages listed in `requirements.txt`. The docker container is already attached to the repo if you want to skip the above step.
 
 Please create your own API Key and do not leak your OpenAI API key. To create your own API Key, you can look at the following documentation: https://platform.openai.com/docs/quickstart. Using the GPT-4o-mini model, we expect the cost to be < $1 to run this project. Store your API key as an environment variable named `OPENAI_API_KEY` and use this alias.
 
 ## Task Description
 ### Recommended Approach
-![alt text](image.png)
+![alt text](scripts/image.png)
 The above figure is a diagram of the recommended architecture for this project. It follows a sequential conversation pattern between two agents. We choose this approach because it's the simplest solution: the pipeline is essentially a directed graph, where we first fetch the restaurant reviews, analyze them, then call a function, but with an additional "supervising" entrypoint agent.
 
 The entry point agent is always the agent responsible for initiating the chat with other agents. Relevant summaries of previous chats between agent pairs are carried over as contexts to other chats. For example, the fetched reviews may be carried over as context from the first conversation to the second. To learn more about summaries, please refer to the `summary_method` in AutoGen.
 
 ### Code
-- `main.py`: where the implementation primarily will go. The starter code is already annotated.
-- `test.py`: public tests. Can run `python test.py`, which will print out the test result summaries. Use these as a sanity check to ensure your implementation is working as intended.
+- `main.py`: where the implementation primarily will go. 
+- `test.py`: public tests. Can run `python test.py`, which will print out the test result summaries. Use these as a sanity check.
 - `calculate_overall_score`: function for determining the overall score of a restaurant.
 - `requirements.txt`: contains all of the necessary packages the project requires. 
 
